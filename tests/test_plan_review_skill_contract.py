@@ -72,7 +72,7 @@ def test_preference_schema_defines_defaults_and_precedence() -> None:
     ]:
         assert setting in preferences
     assert "gpt-5.6-sol" in preferences
-    assert "1 through 20" in preferences
+    assert "1 through 2" in preferences
     assert "Invocation arguments" in preferences
     assert "Project-specific" in preferences
     assert "Shared preferences" in preferences
@@ -172,7 +172,19 @@ def test_skill_defines_convergence_and_pause_guards() -> None:
     assert "validation" in skill
     assert "three consecutive iterations" in skill
     assert "oscillat" in skill.lower()
-    assert "20" in skill
+    assert "2-iteration absolute ceiling" in skill
+
+
+def test_skill_monitors_reviewers_beyond_the_foreground_timeout() -> None:
+    skill = compact(read("SKILL.md"))
+
+    assert "## Monitored Reviewer Dispatch" in skill
+    assert "1800000ms (30 minute) wall-clock budget" in skill
+    assert "cannot exceed 600000ms" in skill
+    assert "log file exists within 20 seconds" in skill
+    assert "Every 5 minutes report elapsed time" in skill
+    assert "exit marker" in skill
+    assert "Silence is never progress" in skill
 
 
 def test_review_only_is_single_pass_and_non_mutating() -> None:
@@ -262,4 +274,4 @@ def test_shared_interface_publishes_plan_review_contract() -> None:
     assert "--review-only" in section
     assert "accepted" in section
     assert "needs-user-decision" in section
-    assert "20" in section
+    assert "at most 2 iterations" in section

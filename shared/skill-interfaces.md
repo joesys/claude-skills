@@ -171,7 +171,7 @@ interfaces, update all callers listed below.
 
 ## Plan Review Skill Interface
 
-**Invocation:** `/plan-review <document> [other-document] [--model <model>] [--arbiter <name|auto|host>] [--review-only] [--max-iterations <1-20>]`
+**Invocation:** `/plan-review <document> [other-document] [--model <model>] [--arbiter <name|auto|host>] [--review-only] [--max-iterations <1-2>]`
 
 **Behavior contract:**
 - Accepts one specification or plan, or reviews both as a coupled unit.
@@ -183,7 +183,7 @@ interfaces, update all callers listed below.
 - Lets only the host edit supplied documents and never mutates other files.
 - Converges only after a fresh review has no P0/P1, no accepted finding remains,
   no user decision is pending, and validation passes.
-- Stops after at most 20 iterations and pauses on stagnation or oscillation.
+- Stops after at most 2 iterations and pauses on stagnation or oscillation.
 - `--review-only` is a single non-mutating review and arbitration pass.
 - Never commits, pushes, stashes, resets, or implements the reviewed plan.
 
