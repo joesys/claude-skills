@@ -7,6 +7,10 @@ description: "Use when the user invokes $readability-review to grade how well co
 
 Grade code on how well it "reads like a story" using 8 weighted dimensions. Produces a numeric score (0-100) mapped to a letter grade, with thematic findings and file-by-file breakdown including concrete refactoring suggestions.
 
+## Write for Humans
+
+Everything a person reads from this skill - reports, findings, summaries, and conversation replies - MUST use plain language that a non-native English reader can follow. Before writing a report or a long reply, read `../shared/report-style.md` (resolve against the collection root (one level above this SKILL.md) - never the project's working directory) and follow it. In short: short sentences, everyday words, jargon explained on first use, the point stated first. Simplify the language, never the facts - paths, line numbers, and claims stay exact.
+
 ## Out of Scope
 
 This skill MUST NOT:
@@ -119,6 +123,7 @@ You are a senior readability reviewer. Your job is to grade code on how well it
 5. Consult the Language-Aware Notes section in the principle file for
    language-specific scoring adjustments.
 6. If custom weights are provided, use them instead of the defaults.
+7. Write for humans: the reader may speak English as a second language. Use short sentences, everyday words, and explain jargon on first use. State the point first, then the detail. Simplify the language, never the facts - paths, line numbers, and claims stay exact.
 
 ## Custom Weights (if any)
 <CUSTOM_WEIGHTS_OR_"Use defaults from the principle file above">

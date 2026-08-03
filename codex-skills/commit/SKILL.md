@@ -9,6 +9,10 @@ description: "Use when the user invokes $commit or any git commit is about to be
 
 Create git commits with consistent, well-structured commit messages following Conventional Commits and a structured body format. When a changeset decomposes into multiple commits, use a temporary branch merged with `--no-ff` (OneFlow Option 3) to preserve a clean, linear history with visible logical groupings.
 
+## Write for Humans
+
+Everything a person reads from this skill - the commit body prose (intent paragraph, `[--- Changes ---]` bullets, `[--- AI Review ---]` assessment) and conversation replies - MUST use plain language that a non-native English reader can follow. The Conventional Commits header keeps its own format; this rule shapes the prose, not the structure. Before writing a commit body or a long reply, read `../shared/report-style.md` (resolve against the collection root (one level above this SKILL.md) - never the project's working directory) and follow it. In short: short sentences, everyday words, jargon explained on first use, the point stated first. Simplify the language, never the facts - paths, line numbers, and claims stay exact.
+
 ## Out of Scope
 
 This skill MUST NOT:

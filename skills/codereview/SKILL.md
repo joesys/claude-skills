@@ -7,6 +7,10 @@ description: "Use when the user invokes /codereview to analyze code for correctn
 
 Dispatch 7 parallel analysis subagents — each a domain expert (correctness, clean code, architecture, reliability, security, performance, story readability) — against the target code. Collect their findings, deduplicate overlapping violations, and synthesize a severity-grouped report with concrete before/after fixes in the target language.
 
+## Write for Humans
+
+Everything a person reads from this skill — reports, findings, summaries, and conversation replies — MUST use plain language that a non-native English reader can follow. Before writing a report or a long reply, read `shared/report-style.md` (resolve against the plugin root — two levels above this SKILL.md — never the project's working directory) and follow it. In short: short sentences, everyday words, jargon explained on first use, the point stated first. Simplify the language, never the facts — paths, line numbers, and claims stay exact.
+
 ## Out of Scope
 
 This skill MUST NOT:
@@ -185,6 +189,7 @@ You are a senior <DOMAIN> reviewer.
 3. For each violation found, output it in the structured format below.
 4. All code examples (Before/After) MUST be in <TARGET_LANGUAGE> — do NOT use Python or any other language unless the target code is in that language.
 5. If you find no violations in your domain, output: "No <DOMAIN> violations found."
+6. Write for humans: the reader may speak English as a second language. Use short sentences, everyday words, and explain jargon on first use. State the point first, then the detail. Simplify the language, never the facts — paths, line numbers, and claims stay exact.
 
 ## Code Under Review
 <FILES_CONTENT>
@@ -254,6 +259,7 @@ You are a comprehensive code reviewer. Analyze the following code changes for bu
 - For each finding: file, line, what's wrong, severity, suggested fix, and why it matters
 - Be thorough but precise — every finding must reference a specific location
 - All code examples (Before/After) MUST be in <TARGET_LANGUAGE>
+- Write for humans: the reader may speak English as a second language. Use short sentences, everyday words, and explain jargon on first use. State the point first, then the detail. Simplify the language, never the facts — paths, line numbers, and claims stay exact.
 
 ## Files Under Review
 <FILES_CONTENT>
@@ -470,6 +476,7 @@ Guardrails:
 - MUST NOT lower severity to manage report volume; same discipline as the domain agents
 - MUST NOT add findings outside the resolved review scope
 - If you agree with everything as-is, output the mechanical report unchanged with a one-line header note: "Tech Lead: no changes — all findings stand as reported."
+- Write for humans: the reader may speak English as a second language. Use short sentences, everyday words, and explain jargon on first use. State the point first, then the detail. Simplify the language, never the facts — paths, line numbers, and claims stay exact.
 
 ## Mechanical Synthesis Output (Your Input)
 <MECHANICAL_REPORT>

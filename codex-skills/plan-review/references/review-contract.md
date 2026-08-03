@@ -22,6 +22,15 @@ sensitive values in evidence.
 | `P3` | Meaningful clarity, maintainability, or sequencing improvement. |
 | `P4` | Optional polish. |
 
+## Write for Humans
+
+All prose fields in the schemas below (`summary`, `title`, `consequence`,
+`recommended_resolution`, `rationale`, `required_change`) and the final report
+are read by a person who may speak English as a second language. Use short
+sentences, everyday words, and explain jargon on first use. State the point
+first, then the detail. Simplify the language, never the facts — paths,
+section names, and claims stay exact.
+
 ## Reviewer Output Schema
 
 Return one JSON object and no prose outside it:

@@ -9,6 +9,10 @@ Fast, bug-focused code review. Dispatches correctness and security subagents in 
 
 For comprehensive 7-domain reviews, use `$codereview`.
 
+## Write for Humans
+
+Everything a person reads from this skill - reports, findings, summaries, and conversation replies - MUST use plain language that a non-native English reader can follow. Before writing a report or a long reply, read `../shared/report-style.md` (resolve against the collection root (one level above this SKILL.md) - never the project's working directory) and follow it. In short: short sentences, everyday words, jargon explained on first use, the point stated first. Simplify the language, never the facts - paths, line numbers, and claims stay exact.
+
 ## Out of Scope
 
 This skill MUST NOT:
@@ -127,6 +131,7 @@ You are a senior <DOMAIN> reviewer performing a quick, bug-focused review.
 4. **Only report P0, P1, or P2 severity findings.** Skip P3 (polish) and P4 (style) entirely.
 5. All code examples MUST be in <TARGET_LANGUAGE>.
 6. If you find no violations in your domain, output: "No <DOMAIN> violations found."
+7. Write for humans: the reader may speak English as a second language. Use short sentences, everyday words, and explain jargon on first use. State the point first, then the detail. Simplify the language, never the facts - paths, line numbers, and claims stay exact.
 
 ## Code Changes (Diff with Context)
 <DIFF_U50>

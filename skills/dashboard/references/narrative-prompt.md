@@ -36,6 +36,10 @@ Rules:
 
 - One sentence per `*_why`. Name the **dominant driver** of that lens's light —
   the single metric most responsible for it — not a list of everything.
+- Write for humans: the reader may speak English as a second language. Use
+  short sentences, everyday words, and explain jargon on first use. State the
+  point first, then the detail. Simplify the language, never the facts — paths,
+  line numbers, and claims stay exact.
 - Never invent numbers that are not in the JSON. Every figure you cite must
   appear verbatim in `dashboard.json`. If a value is `null`, say so or omit it;
   do not guess.

@@ -511,6 +511,7 @@ Read: `../codebase-audit/templates/analysis-template.md` — follow this structu
    - Include measured metrics with benchmarks and sources
    - Provide qualitative analysis referencing specific files
    - List actionable improvements with effort estimates (considering team size and codebase size)
+   - Write for humans: the reader may speak English as a second language. Use short sentences, everyday words, and explain jargon on first use. State the point first, then the detail. Simplify the language, never the facts — paths, line numbers, and claims stay exact.
 
 3. **Benchmark integration** — for every metric, resolve benchmarks in priority order:
    Language + domain specific → Language specific → Domain specific → General.
