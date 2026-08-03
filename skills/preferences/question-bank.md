@@ -114,7 +114,7 @@ This skill runs its own first-run calibration — read and update `.claude/skill
 > - Optional preferred-arbiter ranking, such as Petra then Aris
 >
 > What maximum iterations should the convergence loop use?
-> (1-20, default 20)
+> (1-2, default 2)
 >
 > Save the answers to `.claude/skill-context/plan-review.md` and show the
 > resulting settings.

@@ -16,7 +16,7 @@ from typing import Any, Iterable, Mapping
 
 
 SCHEMA_VERSION = 1
-MAX_ITERATIONS = 20
+MAX_ITERATIONS = 2
 SEVERITIES = {"P0", "P1", "P2", "P3", "P4"}
 VERDICTS = {"accepted", "rejected", "needs-user-decision"}
 
@@ -142,7 +142,7 @@ def create_ledger(
     max_iterations: int = MAX_ITERATIONS,
 ) -> tuple[Path, dict[str, Any]]:
     if not 1 <= max_iterations <= MAX_ITERATIONS:
-        raise StateError("max_iterations must be between 1 and 20")
+        raise StateError("max_iterations must be between 1 and 2")
     root = resolve_repo(repo)
     resolved_documents = resolve_documents(root, documents)
     relative_documents = _relative_paths(root, resolved_documents)

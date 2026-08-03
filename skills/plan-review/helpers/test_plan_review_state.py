@@ -47,13 +47,13 @@ def test_create_ledger_outside_repository(tmp_path: Path) -> None:
     ledger_path, ledger = plan_review_state.create_ledger(
         repo,
         [spec, plan],
-        max_iterations=20,
+        max_iterations=2,
     )
 
     assert ledger["schema_version"] == 1
     assert ledger["repo_root"] == str(repo.resolve())
     assert ledger["documents"] == ["spec.md", "plan.md"]
-    assert ledger["max_iterations"] == 20
+    assert ledger["max_iterations"] == 2
     assert ledger["iterations"] == []
     assert not ledger_path.is_relative_to(repo.resolve())
     assert ledger_path.parent == Path(tempfile.gettempdir()).resolve()
@@ -64,8 +64,8 @@ def test_create_ledger_outside_repository(tmp_path: Path) -> None:
 def test_create_ledger_rejects_invalid_iteration_ceiling(tmp_path: Path) -> None:
     repo, spec, _ = make_repo(tmp_path)
 
-    with pytest.raises(plan_review_state.StateError, match="between 1 and 20"):
-        plan_review_state.create_ledger(repo, [spec], max_iterations=21)
+    with pytest.raises(plan_review_state.StateError, match="between 1 and 2"):
+        plan_review_state.create_ledger(repo, [spec], max_iterations=3)
 
 
 @pytest.mark.skipif(sys.platform == "win32", reason="Windows uses ACLs")
@@ -83,7 +83,7 @@ def test_create_ledger_requires_documents_inside_repo(tmp_path: Path) -> None:
     outside.write_text("# Outside\n", encoding="utf-8")
 
     with pytest.raises(plan_review_state.StateError, match="inside repository"):
-        plan_review_state.create_ledger(repo, [outside], max_iterations=20)
+        plan_review_state.create_ledger(repo, [outside], max_iterations=2)
 
 
 def test_baseline_preserves_existing_document_edits(tmp_path: Path) -> None:
@@ -377,7 +377,9 @@ def test_same_material_finding_three_times_pauses_for_stagnation(
     tmp_path: Path,
 ) -> None:
     repo, spec, plan = make_repo(tmp_path)
-    ledger_path, _ = plan_review_state.create_ledger(repo, [spec, plan])
+    ledger_path, ledger = plan_review_state.create_ledger(repo, [spec, plan])
+    ledger["max_iterations"] = 3
+    plan_review_state.save_ledger(ledger_path, ledger)
 
     for review_id in ["R1", "R8"]:
         result = plan_review_state.record_iteration(
@@ -407,7 +409,9 @@ def test_same_material_finding_three_times_pauses_for_stagnation(
 
 def test_document_state_a_b_a_pauses_for_oscillation(tmp_path: Path) -> None:
     repo, spec, plan = make_repo(tmp_path)
-    ledger_path, _ = plan_review_state.create_ledger(repo, [spec, plan])
+    ledger_path, ledger = plan_review_state.create_ledger(repo, [spec, plan])
+    ledger["max_iterations"] = 3
+    plan_review_state.save_ledger(ledger_path, ledger)
     state_a = plan.read_text(encoding="utf-8")
 
     plan_review_state.record_iteration(

@@ -18,7 +18,7 @@ Resolve settings in this order:
 | Arbiter | `auto` | A repository agent name, `auto`, or `host`. |
 | Preferred arbiters | Empty | Ordered names used to rank discovered repository agents. |
 | Arbiter ambiguity | `ask` | Present ranked candidates, mark one recommended, and wait. |
-| Maximum iterations | `20` | Accept values 1 through 20; never raise the absolute ceiling. |
+| Maximum iterations | `2` | Accept values 1 through 2; never raise the absolute ceiling. |
 | Fix accepted findings | `yes` | `--review-only` overrides this to no. |
 | Fresh context each iteration | `yes` | Never resume reviewer sessions. |
 
@@ -31,7 +31,7 @@ Resolve settings in this order:
 - Arbiter: auto
 - Preferred arbiters: Petra, Aris
 - Arbiter ambiguity: ask
-- Maximum iterations: 20
+- Maximum iterations: 2
 - Fix accepted findings: yes
 - Fresh context each iteration: yes
 ```

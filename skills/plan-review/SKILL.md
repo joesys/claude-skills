@@ -32,7 +32,7 @@ Options:
 - `--model <MODEL>` selects the review model and therefore its provider.
 - `--arbiter <NAME|auto|host>` selects an arbiter or discovery behavior.
 - `--review-only` runs one non-mutating review and arbitration pass.
-- `--max-iterations <N>` lowers the ceiling; valid values are 1 through 20.
+- `--max-iterations <N>` lowers the ceiling; valid values are 1 through 2.
 
 Accept one or two Markdown documents. When one is supplied, warn exactly:
 
@@ -87,8 +87,39 @@ Layer the chosen model onto the provider's read-only command template:
 - Claude CLI: use `--permission-mode plan`; start a new non-interactive process.
 
 Use the platform-adaptive temp-file-and-stdin protocol from shared delegation
-guidance with a 600000ms timeout. Do not request or capture a resumable session
-for later use. Delete prompt and response temp files after the round is recorded.
+guidance, but dispatch the reviewer as a monitored background process instead of
+a foreground call. A foreground dispatch cannot exceed 600000ms, and a grounded
+repository-wide review legitimately runs longer. Each reviewer gets a 1800000ms
+(30 minute) wall-clock budget.
+
+Do not request or capture a resumable session for later use.
+
+## Monitored Reviewer Dispatch
+
+1. Write the reviewer prompt to a temp file outside the repository.
+2. Write a launcher script that pipes that prompt into the resolved CLI,
+   redirects stdout and stderr to a log file, and appends an exit marker line
+   carrying the process exit code as its final action. Never inline the command
+   with nested quoting.
+3. Start the launcher in the background and, in the same tool call, confirm the
+   log file exists within 20 seconds. A missing log is a dispatch failure, not a
+   slow start.
+4. Poll the process. Every 5 minutes report elapsed time, whether the process is
+   alive, whether the log grew since the previous poll, and the last log line.
+   Silence is never progress.
+5. Stop waiting when the exit marker appears, when the process disappears
+   without one, or when the 30-minute budget is exhausted.
+
+| Outcome | Action |
+|---|---|
+| Exit marker, code 0 | Validate the response against the schema and continue the round. |
+| Exit marker, non-zero code | Stop; report the exit code and closing log lines; never fail over to another model. |
+| Process gone, no exit marker | Declare the reviewer dead immediately; stop and report it. |
+| Budget exhausted | Terminate the process, report the timeout, and suggest lower reasoning effort or fewer documents. |
+| Log never appeared within 20 seconds | Treat as a dispatch failure; stop and report the launcher command and log path. |
+
+Delete the prompt file, response and log files, and the launcher script after the
+round is recorded.
 
 ## Fresh Reviewer Prompt
 
@@ -210,7 +241,7 @@ Convergence requires a fresh review with no P0 or P1, no accepted findings remai
 that require another pass, no pending user decision, and passing validation. Pause on
 an unapplied accepted finding, three consecutive iterations of the same material
 finding, oscillation, model failure, non-target mutation, validation failure, or
-the 20-iteration absolute ceiling.
+the 2-iteration absolute ceiling.
 
 ## Review-Only Mode
 
@@ -250,6 +281,9 @@ values or the full internal ledger in user output.
 | Ambiguous document roles | Ask which is the spec and which is the plan. |
 | Unknown or ambiguous model | Ask for a registered or provider-qualified model. |
 | CLI or model unavailable | Stop and ask whether to select another model. |
+| Reviewer log absent after 20 seconds | Report the dispatch failure with the launcher command and log path. |
+| Reviewer process died without an exit marker | Declare it dead at once; report the last log lines. |
+| Reviewer exceeded the 30-minute budget | Terminate it, report the timeout, and suggest lower effort or fewer documents. |
 | Multiple plausible arbiters | Ask with ranked evidence and a recommendation. |
 | No repository arbiter | Use host/base generic arbitration and announce it. |
 | Malformed reviewer output twice | Stop and offer model selection. |
