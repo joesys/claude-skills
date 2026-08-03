@@ -41,6 +41,11 @@ be reviewed carefully, and what may be skimmed. Replace agent execution language
 with clear suggested actions. Preserve technical commands only when they help the
 human verify state.
 
+Write for humans: the reader may speak English as a second language. Use short
+sentences, everyday words, and explain jargon on first use. State the point
+first, then the detail. Simplify the language, never the facts — paths, line
+numbers, and claims stay exact.
+
 ## Target Profiles
 
 | Target | Bootstrap-only differences |

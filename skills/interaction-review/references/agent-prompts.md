@@ -26,6 +26,7 @@ Prepend to every lens agent prompt:
 4. **Coaching tone.** Frame findings as growth opportunities, not failures. The user is trying to improve.
 5. **Flag uncertainty.** If you're unsure whether a pattern is a problem or intentional, say so. "This might be intentional, but..." is valid output.
 6. **Compare to previous report.** If previous report data is provided, explicitly note what improved, regressed, or stayed the same.
+7. **Write for humans.** The reader may speak English as a second language. Use short sentences, everyday words, and explain jargon on first use. State the point first, then the detail. Simplify the language, never the facts — paths, line numbers, and claims stay exact.
 
 ### Context Budgets
 
@@ -372,6 +373,7 @@ The host MUST substitute these placeholders before dispatch — the coach shares
 - MUST cite a reason for every change, inline as `[Coach: reason]`
 - MUST ensure every improvement item passes: "Could the user do this in their next session?"
 - MUST NOT add generic advice ("communicate better", "be more specific") — every suggestion must be concrete
+- Write for humans: the reader may speak English as a second language. Use short sentences, everyday words, and explain jargon on first use. State the point first, then the detail. Simplify the language, never the facts — paths, line numbers, and claims stay exact.
 
 ## What to Check
 

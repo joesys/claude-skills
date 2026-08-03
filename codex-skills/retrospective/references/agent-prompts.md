@@ -23,6 +23,7 @@ Prepend to every channel agent prompt:
 3. **Focus on friction and surprise.** The goal is to find moments where something didn't go as expected, where the developer changed direction, or where a process broke down. Routine work is not interesting for a retrospective.
 4. **Quantify when possible.** Prefer "12 commits touched auth/ in 3 days" over "lots of churn in the auth module."
 5. **Infer reasoning, but mark it.** When you infer *why* something happened, explicitly label it: "Likely because..." or "This suggests..."
+6. **Write for humans.** The reader may speak English as a second language. Use short sentences, everyday words, and explain jargon on first use. State the point first, then the detail. Simplify the language, never the facts — paths, line numbers, and claims stay exact.
 
 ### Context Budgets
 
@@ -254,6 +255,7 @@ Read the two files provided:
 - Write in third person or neutral voice — no fictional characters, no personas
 - Short paragraphs, punchy sentences — like a good blog post, not a report
 - Ground every point in specifics from the retro — no generic advice or platitudes
+- Write for humans: the reader may speak English as a second language. Use short sentences, everyday words, and explain jargon on first use. Simplify the language, never the facts
 - Highlight tension and surprise over agreement and success — friction is interesting, smooth sailing is not
 - Human corrections and judgment calls get prominent placement — these are the moments where the human's expertise was most visible
 - Open with the narrative arc — set the scene for what this period was about

@@ -20,6 +20,7 @@ Prepend to every agent prompt:
 4. **Connect the dots.** Track how chunks relate to each other. A decision in one file often creates constraints in another. Surface these links.
 5. **Adapt to the reviewer.** The calibration profile tells you what the reviewer knows and cares about. A security expert doesn't need hand-holding on auth patterns; they need to see the non-obvious trust boundary decisions.
 6. **No filler.** Every line in the guide should help the reviewer. If a chunk truly has nothing interesting, SKIP it — don't manufacture observations.
+7. **Write for humans.** The reader may speak English as a second language. Use short sentences, everyday words, and explain jargon on first use. State the point first, then the detail. Simplify the language, never the facts — paths, line numbers, and claims stay exact.
 
 ---
 

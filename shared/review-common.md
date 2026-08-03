@@ -14,6 +14,7 @@ These constraints apply to **every** review skill that consumes this file. Subag
 4. **No over-engineering.** Do not suggest abstractions, patterns, or interfaces for single-use code. YAGNI/KISS applies.
 5. **Test code follows different standards.** Prefer DAMP over DRY in tests — repeated setup for clarity is acceptable, not a finding.
 6. **Profile before flagging perf.** Surface obvious algorithmic issues (N+1, O(n²) where O(n) is trivial); skip micro-optimizations.
+7. **Write for humans.** The reader may speak English as a second language. Use short sentences, everyday words, and explain jargon on first use. State the point first, then the detail. Simplify the language, never the facts — paths, line numbers, and claims stay exact. Full rules: `shared/report-style.md`. When building a subagent prompt, embed this rule's text directly — a dispatched agent may not be able to resolve the file path.
 
 ---
 

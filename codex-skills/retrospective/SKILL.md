@@ -7,6 +7,10 @@ description: "Use when the user invokes $retrospective to run a structured, disc
 
 Run a structured retrospective facilitated by AI, interleaved with human check-ins at every phase. Dispatch 5 parallel channel agents - each mining a different data source (git history, conversations, code quality, planning docs, tests) - to build a comprehensive digest. Derive discussion topics from the data, walk through them with the human, and produce three output layers: action items, process improvements, and skill improvements. Finish with a readable narrative written by a fresh-context agent.
 
+## Write for Humans
+
+Everything a person reads from this skill - reports, findings, summaries, and conversation replies - MUST use plain language that a non-native English reader can follow. Before writing a report or a long reply, read `../shared/report-style.md` (resolve against the collection root (one level above this SKILL.md) - never the project's working directory) and follow it. In short: short sentences, everyday words, jargon explained on first use, the point stated first. Simplify the language, never the facts - paths, line numbers, and claims stay exact.
+
 ## Out of Scope
 
 This skill MUST NOT:

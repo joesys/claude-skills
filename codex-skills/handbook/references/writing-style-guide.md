@@ -11,6 +11,7 @@ Injected into every chapter writer prompt to ensure consistent voice and formatt
 - **Present tense.** "The server starts on port 3000" not "The server will start."
 - **Confident but honest.** State facts directly. When uncertain, say so explicitly with *[Inferred — not confirmed by code]*.
 - **No filler.** Cut "basically," "essentially," "it should be noted that," "in order to."
+- **Write for humans.** The reader may speak English as a second language. Use short sentences, everyday words, and explain jargon on first use. State the point first, then the detail. Simplify the language, never the facts — paths, line numbers, and claims stay exact.
 
 ## Formatting Rules
 

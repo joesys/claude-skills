@@ -7,6 +7,10 @@ description: "Use when the user invokes /explain to analyze a codebase, director
 
 Dispatch 5 parallel analysis subagents — each a domain lens (structure, behavior, domain & data, external dependencies, health & risk) — against the target scope. Collect their findings and synthesize a layered report that goes from 30-second overview to deep understanding.
 
+## Write for Humans
+
+Everything a person reads from this skill — reports, findings, summaries, and conversation replies — MUST use plain language that a non-native English reader can follow. Before writing a report or a long reply, read `shared/report-style.md` (resolve against the plugin root — two levels above this SKILL.md — never the project's working directory) and follow it. In short: short sentences, everyday words, jargon explained on first use, the point stated first. Simplify the language, never the facts — paths, line numbers, and claims stay exact.
+
 ## Out of Scope
 
 This skill MUST NOT:
@@ -134,6 +138,7 @@ Each subagent receives a prompt containing:
 5. **Don't reproduce source code.** Reference code with `file:line_number` pointers and short snippets for clarity. The user has the code — they need understanding, not a copy.
 6. **Diagrams MUST use Mermaid syntax and follow the Diagram Standards included in this prompt** (the host appends them below — syntax patterns per diagram type, adaptive detail rules, and authoring notes). ASCII box-drawing for graphs is not permitted.
 7. **No value judgments in non-Health lenses.** Agents 1–4 describe and explain. Only Agent 5 (Health & Risk) assesses quality and risk.
+8. **Write for humans.** The reader may speak English as a second language. Use short sentences, everyday words, and explain jargon on first use. State the point first, then the detail. Simplify the language, never the facts — paths, line numbers, and claims stay exact.
 
 ### Subagent Roster
 

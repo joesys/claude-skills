@@ -7,6 +7,10 @@ description: "Use when the user invokes $codebase-audit to run a language-agnost
 
 Run a comprehensive, language-agnostic codebase quality audit. Measures up to 12 core quality criteria + development velocity across 6 parallel collection agents, displays graded metrics on console, and optionally writes a full analysis report with industry benchmarks and actionable recommendations.
 
+## Write for Humans
+
+Everything a person reads from this skill - reports, findings, summaries, and conversation replies - MUST use plain language that a non-native English reader can follow. Before writing a report or a long reply, read `../shared/report-style.md` (resolve against the collection root (one level above this SKILL.md) - never the project's working directory) and follow it. In short: short sentences, everyday words, jargon explained on first use, the point stated first. Simplify the language, never the facts - paths, line numbers, and claims stay exact.
+
 ## Out of Scope
 
 This skill MUST NOT:

@@ -9,6 +9,10 @@ Generate a personalized reading guide for human review. Analyze a change set or 
 
 The existing review skills (`/codereview`, `/quick-review`, `/readability-review`) have the AI do the review. This skill is different — it helps the *human* review more effectively.
 
+## Write for Humans
+
+Everything a person reads from this skill — reports, findings, summaries, and conversation replies — MUST use plain language that a non-native English reader can follow. Before writing a report or a long reply, read `shared/report-style.md` (resolve against the plugin root — two levels above this SKILL.md — never the project's working directory) and follow it. In short: short sentences, everyday words, jargon explained on first use, the point stated first. Simplify the language, never the facts — paths, line numbers, and claims stay exact.
+
 ## Out of Scope
 
 This skill MUST NOT:
