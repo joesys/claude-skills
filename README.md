@@ -1,6 +1,6 @@
 # joesys-skills
 
-A collection of 22 agent skills for Claude Code and Codex: turn rough ideas
+A collection of 23 agent skills for Claude Code and Codex: turn rough ideas
 into reusable prompts, consult other AI models, review code and plans,
 understand projects, improve engineering workflows, and preserve or publish
 development work.
