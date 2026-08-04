@@ -27,6 +27,7 @@ EXPECTED_SKILLS = {
     "export",
     "handoff",
     "handbook",
+    "huh",
     "human-review-guide",
     "interaction-review",
     "plan-review",
@@ -259,7 +260,7 @@ def test_plugin_versions_are_synchronized():
         if plugin["name"] == "joesys-skills"
     )
 
-    assert claude_plugin["version"] == "18.2.0"
+    assert claude_plugin["version"] == "18.3.0"
     assert codex_plugin["version"] == claude_plugin["version"]
     assert marketplace_version == claude_plugin["version"]
 
@@ -320,8 +321,8 @@ def test_generated_manifest_publishes_release_18_with_22_skills(tmp_path):
     output = tmp_path / "joesys-skills"
     manifest = codex_adapter.build_collection(REPO_ROOT, output)
 
-    assert manifest["source_version"] == "18.2.0"
-    assert len(manifest["installed_skills"]) == 22
+    assert manifest["source_version"] == "18.3.0"
+    assert len(manifest["installed_skills"]) == 23
     assert "prompt" in manifest["installed_skills"]
 
 

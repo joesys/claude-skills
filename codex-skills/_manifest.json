@@ -1,6 +1,6 @@
 {
   "name": "joesys-skills",
-  "source_version": "18.2.0",
+  "source_version": "18.3.0",
   "installed_skills": [
     "ai-council",
     "antigravity",
@@ -15,6 +15,7 @@
     "export",
     "handbook",
     "handoff",
+    "huh",
     "human-review-guide",
     "interaction-review",
     "plan-review",
@@ -39,6 +40,7 @@
     "$export",
     "$handbook",
     "$handoff",
+    "$huh",
     "$human-review-guide",
     "$interaction-review",
     "$plan-review",
