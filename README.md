@@ -57,6 +57,7 @@ codex plugin marketplace upgrade
 | Review | [`plan-review`](#plan-review) | Iteratively stress-test specs and implementation plans |
 | Understand | [`explain`](#explain) | Explain a project, file, symbol, or feature in layers |
 | Understand | [`handbook`](#handbook) | Generate a self-contained project handbook |
+| Understand | [`huh`](#huh) | Re-explain the last answer in plain language with options, confidence, and unasked questions |
 | Improve | [`dashboard`](#dashboard) | Build a deterministic project-health dashboard |
 | Improve | [`retrospective`](#retrospective) | Facilitate an evidence-based development retrospective |
 | Improve | [`interaction-review`](#interaction-review) | Grade human-AI collaboration and coach improvements |
@@ -306,6 +307,22 @@ and produces Markdown plus HTML under `docs/handbook/`.
 /handbook
 /handbook src/auth
 ```
+
+### huh
+
+Re-explain the assistant's previous message in plain English that a non-native
+reader can follow. When the message involves a problem or a decision, the
+reply also covers the issue and its context, the options with pros and cons,
+and a recommendation with its trade-off stated openly. Every reply closes
+with two disclosures: where the answer is least confident, and the biggest
+questions the operator has not asked yet.
+
+```text
+/huh
+/huh what is a race condition here
+```
+
+The skill explains and stops; it never edits files or runs commands.
 
 ## Track Health and Improve Workflows
 
