@@ -1,6 +1,7 @@
 ---
 name: plan-review
-description: "Use when the user wants to review, stress-test, or iteratively refine a specification, an implementation plan, or paired planning documents before implementation begins."
+description: "Use only when the user explicitly invokes /plan-review to review, stress-test, or iteratively refine a specification, an implementation plan, or paired planning documents before implementation begins. Do not trigger automatically for general requests to review planning documents."
+disable-model-invocation: true
 ---
 
 # Plan Review

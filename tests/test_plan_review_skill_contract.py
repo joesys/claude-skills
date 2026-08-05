@@ -105,6 +105,9 @@ def test_skill_frontmatter_and_invocation_are_specific() -> None:
     frontmatter = skill.split("---", 2)[1]
 
     assert "name: plan-review" in frontmatter
+    assert "disable-model-invocation: true" in frontmatter
+    assert "only when the user explicitly invokes /plan-review" in frontmatter
+    assert "Do not trigger automatically" in frontmatter
     assert "specification" in frontmatter
     assert "implementation plan" in frontmatter
     assert "/plan-review <document> [other-document] [options]" in skill

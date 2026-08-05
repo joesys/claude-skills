@@ -260,7 +260,7 @@ def test_plugin_versions_are_synchronized():
         if plugin["name"] == "joesys-skills"
     )
 
-    assert claude_plugin["version"] == "18.3.0"
+    assert claude_plugin["version"] == "18.4.0"
     assert codex_plugin["version"] == claude_plugin["version"]
     assert marketplace_version == claude_plugin["version"]
 
@@ -287,7 +287,11 @@ def test_generated_plan_review_is_behaviorally_adapted(tmp_path):
     preferences = (
         output / "plan-review" / "references" / "preference-schema.md"
     ).read_text(encoding="utf-8")
+    frontmatter = skill.split("---", 2)[1]
 
+    assert "only when the user explicitly invokes $plan-review" in frontmatter
+    assert "Do not trigger automatically" in frontmatter
+    assert "disable-model-invocation" not in frontmatter
     assert "$plan-review" in skill
     assert "/plan-review" not in skill
     assert "current host's `plan-review.md` skill-context file" in preferences
@@ -321,7 +325,7 @@ def test_generated_manifest_publishes_release_18_with_22_skills(tmp_path):
     output = tmp_path / "joesys-skills"
     manifest = codex_adapter.build_collection(REPO_ROOT, output)
 
-    assert manifest["source_version"] == "18.3.0"
+    assert manifest["source_version"] == "18.4.0"
     assert len(manifest["installed_skills"]) == 23
     assert "prompt" in manifest["installed_skills"]
 
