@@ -334,7 +334,7 @@ Return structured markdown:
 
 ## Phase 3.5: Coach Re-Reviewer
 
-This agent runs sequentially after Phase 3 synthesis. It always uses `model: "opus"`.
+This agent runs sequentially after Phase 3 synthesis and inherits the parent model and reasoning effort.
 
 ```
 <PERSONA>

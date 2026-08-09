@@ -143,7 +143,7 @@ This path exists because auto-invocations (e.g., from the commit skill) already 
 
 When `--from-context` is **not** set, dispatch **3 subagents simultaneously** via the Codex agent workflow - all 3 in a single response (3 parallel Codex agent workflow calls).
 
-**MUST use** `model: "opus"` for every Codex agent workflow call.
+For same-platform subagents, do not pass a model or reasoning-effort override. Let every subagent inherit the parent model and reasoning effort unless the user explicitly asks for an override.
 
 Read `references/agent-prompts.md` for the full prompt template for each agent. Each subagent receives the guiding principles, resolved timeframe, scope, relevant file paths, and the topic hint (if provided).
 

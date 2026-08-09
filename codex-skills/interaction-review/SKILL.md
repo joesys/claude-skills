@@ -106,7 +106,9 @@ Read `../shared/skill-context.md` for the full protocol (resolve `../shared/...`
 
 ## Phase 2: Parallel Analysis - 5 Subagents
 
-**MUST dispatch all 5 subagents simultaneously** - all 5 in a single response using the Codex agent workflow. Each uses `model: "opus"`. Read `references/agent-prompts.md` for full prompt templates and guiding principles.
+**MUST dispatch all 5 subagents simultaneously** - all 5 in a single response using the Codex agent workflow. Read `references/agent-prompts.md` for full prompt templates and guiding principles.
+
+For same-platform subagents, do not pass a model or reasoning-effort override. Let every subagent inherit the parent model and reasoning effort unless the user explicitly asks for an override.
 
 ### Agent Roster
 
@@ -193,7 +195,7 @@ Build the draft report following the section order in `references/output-formats
 
 ## Phase 3.5: Coach Re-Review
 
-One Agent call, `model: "opus"`. Sequential - runs after Phase 3 produces the draft report. Read `references/agent-prompts.md` Section Phase 3.5 for the full prompt.
+One Agent call. Sequential - runs after Phase 3 produces the draft report. Read `references/agent-prompts.md` Section Phase 3.5 for the full prompt.
 
 ### Inputs
 

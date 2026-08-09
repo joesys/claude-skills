@@ -16,7 +16,7 @@ Everything a person reads from this skill — reports, findings, summaries, and 
 This skill MUST NOT:
 - Answer the question itself instead of dispatching to the council. The user invoked this skill to get *all three models'* takes — substituting your own answer defeats the purpose.
 - Skip a leg silently. If a leg fails, the synthesis MUST name the missing model and offer a retry.
-- Tilt the synthesis toward the host model (Claude). Treat all 3 legs as peers; dissent from any leg gets equal weight in consensus/tension analysis.
+- Tilt the synthesis toward the host model. Treat all 3 legs as peers; dissent from any leg gets equal weight in consensus/tension analysis.
 - Suppress the default save behavior. When `--no-save` is NOT specified, saving to `docs/ai-council/YYYYMMDD-<topic>/` is mandatory, not optional.
 - Modify the user's project files outside the council output directory. The synthesis is the only artifact written.
 
@@ -133,9 +133,9 @@ cat /tmp/council-antigravity.txt | <AGY_CMD>
 
 Choose the mechanism based on whether the prompt is self-contained:
 
-**Use subagent (Agent tool)** when Phase 1 fully resolved all context the question needs. The prompt is self-contained and the Claude leg won't need to read additional files or search the web during execution. Spawn with `model: "fable"` and pass the full four-part prompt. Subagent is faster — no CLI startup overhead.
+**Use a Claude Code Fable subagent** only when the parent is running in Claude Code and Phase 1 fully resolved all context the question needs. This is an intentional cross-model council leg, so its explicit `model: "fable"` setting is an exception to normal parent-model inheritance. Pass the full four-part prompt. A subagent is faster because there is no CLI startup overhead.
 
-**Use CLI** when the question references specific files or codepaths that Phase 1 could not fully resolve, and the Claude leg would benefit from tool access to explore further. Substitute `<CLAUDE_CMD>` with the current invocation from `shared/model-defaults.md` § Claude CLI, replace `--model opus` with `--model fable` (the council's Claude leg runs Fable), and append `--name` for resumability:
+**Use CLI** when the parent is not Claude Code, or when the question references specific files or codepaths that Phase 1 could not fully resolve and the Claude leg would benefit from tool access to explore further. Substitute `<CLAUDE_CMD>` with the current invocation from `shared/model-defaults.md` § Claude CLI, replace `--model opus` with `--model fable` (the council's Claude leg runs Fable), and append `--name` for resumability:
 
 ```bash
 cat /tmp/council-claude.txt | <CLAUDE_CMD> --name "council-<topic>"

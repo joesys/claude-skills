@@ -167,7 +167,9 @@ When sources conflict, higher rank wins. This applies to ALL phases:
 
 ## Phase 1 -- Parallel Analysis
 
-**MUST dispatch all 6 agents in a single message using the Agent tool.** All agents use `model: "opus"`. Sequential dispatch is a defect.
+**MUST dispatch all 6 agents in a single message using the Agent tool.** Sequential dispatch is a defect.
+
+For same-platform subagents, do not pass a model or reasoning-effort override. Let every subagent inherit the parent model and reasoning effort unless the user explicitly asks for an override.
 
 Read `references/agent-prompts.md` for the full prompt template for each agent. Read `references/output-schemas.md` for the output schema each agent must follow.
 
@@ -263,7 +265,7 @@ All interview answers are persisted to `.claude/skill-context/handbook.md`. On s
 
 ## Phase 3 -- Parallel Chapter Writers
 
-**MUST dispatch all chapter writer agents in a single message using the Agent tool.** All agents use `model: "opus"`. Sequential dispatch is a defect.
+**MUST dispatch all chapter writer agents in a single message using the Agent tool.** Sequential dispatch is a defect.
 
 Read `references/agent-prompts.md` for the full prompt template for each chapter writer. Read `references/writing-style-guide.md` and inject it into every writer prompt to ensure consistent voice.
 
@@ -399,7 +401,7 @@ Emit the validation report as a structured checklist. Pass it to Phase 5b.
 
 ## Phase 5b -- Review & Polish Pass
 
-Dispatch a single review agent (`model: "opus"`) with:
+Dispatch a single review agent with:
 - The full assembled markdown from Phase 4
 - The mechanical validation report from Phase 5a
 - The writing style guide — inject the contents of `references/writing-style-guide.md` (resolved against this skill's directory) into the prompt's `{writing_style_guide}` placeholder, exactly as Phase 3 does for chapter writers
@@ -492,9 +494,9 @@ HTML render failed (markdown still saved): <error>
 
 | Phase | Agents | Notes |
 |---|---|---|
-| Phase 1 (Analysis) | 6 | All dispatched in single message, `model: "opus"` |
-| Phase 3 (Chapter Writers) | 13-16 | 13 core + 0-3 conditional. All in single message, `model: "opus"` |
-| Phase 5b (Review) | 1 | Single review agent, `model: "opus"` |
+| Phase 1 (Analysis) | 6 | All dispatched in one message; inherit the parent model |
+| Phase 3 (Chapter Writers) | 13-16 | 13 core + 0-3 conditional. All dispatched in one message; inherit the parent model |
+| Phase 5b (Review) | 1 | Single review agent; inherit the parent model |
 | **Total** | **20-23** | Depending on conditional chapters |
 
 ---

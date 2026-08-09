@@ -156,7 +156,7 @@ For each violation:
 **Why**: What could go wrong if this is not addressed.
 ```
 
-**MUST spawn subagents** with `model: "opus"`.
+For same-platform subagents, do not pass a model or reasoning-effort override. Let every subagent inherit the parent model and reasoning effort unless the user explicitly asks for an override.
 
 Quick-review uses `Suggested Fix` instead of full before/after code blocks to prioritize speed and brevity. The full `$codereview` skill uses before/after blocks for detailed treatment.
 

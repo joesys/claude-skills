@@ -2,6 +2,7 @@
 
 import json
 import os
+import re
 import sys
 from pathlib import Path
 
@@ -37,6 +38,30 @@ EXPECTED_SKILLS = {
     "readability-review",
     "retrospective",
     "ss",
+}
+
+SAME_PLATFORM_SUBAGENT_SKILLS = {
+    "codebase-audit",
+    "codereview",
+    "devlog",
+    "explain",
+    "handbook",
+    "human-review-guide",
+    "interaction-review",
+    "quick-review",
+    "readability-review",
+    "retrospective",
+}
+
+PINNED_SUBAGENT_MODEL = re.compile(
+    r'(?:\bmodel:\s*|\|\s*Model\s*\|\s*)'
+    r'`?["\']?(?:opus|fable|sonnet|haiku|gpt-[\w.-]+)',
+    re.IGNORECASE,
+)
+
+ALLOWED_EXPLICIT_MODEL_DOCS = {
+    Path("ai-council/SKILL.md"),
+    Path("plan-review/references/preference-schema.md"),
 }
 
 
@@ -143,6 +168,51 @@ def test_shared_files_reference_siblings_in_place(tmp_path):
     )
     assert "./model-defaults.md" in dispatch
     assert "~/.codex/skills" not in dispatch
+
+
+def test_same_platform_subagents_inherit_parent_model(tmp_path):
+    output = tmp_path / "joesys-skills"
+    codex_adapter.build_collection(REPO_ROOT, output)
+
+    inheritance_rule = (
+        "Let every subagent inherit the parent model and reasoning effort"
+    )
+    for collection in (REPO_ROOT / "skills", output):
+        for skill_name in SAME_PLATFORM_SUBAGENT_SKILLS:
+            skill_root = collection / skill_name
+            skill = (skill_root / "SKILL.md").read_text(encoding="utf-8")
+            assert inheritance_rule in skill, skill_root
+
+        for markdown in collection.rglob("*.md"):
+            relative_path = markdown.relative_to(collection)
+            if relative_path in ALLOWED_EXPLICIT_MODEL_DOCS:
+                continue
+            text = markdown.read_text(encoding="utf-8")
+            assert not PINNED_SUBAGENT_MODEL.search(text), markdown
+
+    source_defaults = (REPO_ROOT / "shared" / "model-defaults.md").read_text(
+        encoding="utf-8"
+    )
+    generated_defaults = (output / "shared" / "model-defaults.md").read_text(
+        encoding="utf-8"
+    )
+    for defaults in (source_defaults, generated_defaults):
+        assert "## Same-Platform Subagent Defaults" in defaults
+        assert "omit the per-call `model` and `effort` fields" in defaults
+
+
+def test_ai_council_keeps_its_cross_model_fable_exception(tmp_path):
+    output = tmp_path / "joesys-skills"
+    codex_adapter.build_collection(REPO_ROOT, output)
+
+    for skill_path in (
+        REPO_ROOT / "skills" / "ai-council" / "SKILL.md",
+        output / "ai-council" / "SKILL.md",
+    ):
+        skill = skill_path.read_text(encoding="utf-8")
+        assert "intentional cross-model council leg" in skill
+        assert 'model: "fable"' in skill
+        assert "Use CLI** when the parent is not Claude Code" in skill
 
 
 def test_generated_skill_markdown_is_ascii_for_windows_validator(tmp_path):
@@ -260,7 +330,7 @@ def test_plugin_versions_are_synchronized():
         if plugin["name"] == "joesys-skills"
     )
 
-    assert claude_plugin["version"] == "18.4.0"
+    assert claude_plugin["version"] == "18.5.0"
     assert codex_plugin["version"] == claude_plugin["version"]
     assert marketplace_version == claude_plugin["version"]
 
@@ -321,11 +391,11 @@ def test_generated_docs_have_no_cross_host_path_contradictions(tmp_path):
     assert "`.claude/` directory doesn't exist" not in combined
 
 
-def test_generated_manifest_publishes_release_18_with_22_skills(tmp_path):
+def test_generated_manifest_publishes_release_18_5_with_23_skills(tmp_path):
     output = tmp_path / "joesys-skills"
     manifest = codex_adapter.build_collection(REPO_ROOT, output)
 
-    assert manifest["source_version"] == "18.4.0"
+    assert manifest["source_version"] == "18.5.0"
     assert len(manifest["installed_skills"]) == 23
     assert "prompt" in manifest["installed_skills"]
 

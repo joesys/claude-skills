@@ -232,7 +232,7 @@ Return structured markdown with:
 
 ## Phase 4: Narrative Agent
 
-This phase always runs in a fresh context agent (`subagent_type: "general-purpose"`, `model: "opus"`). The analytical phases load the context with structured data — creative writing quality degrades in that environment.
+This phase always runs in a fresh context agent (`subagent_type: "general-purpose"`) that inherits the parent model and reasoning effort. The analytical phases load the context with structured data — creative writing quality degrades in that environment.
 
 ### Agent Receives
 

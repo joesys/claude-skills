@@ -2,7 +2,7 @@
 
 Single source of truth for default model identifiers and CLI flags used across skills. When a model version changes, update this file — all skills that reference it will pick up the new defaults.
 
-**Consumers:** codex, antigravity, claude, ai-council, codereview, quick-review, plan-review
+**Consumers:** all skills that spawn same-platform subagents, plus codex, antigravity, claude, ai-council, codereview, quick-review, and plan-review
 
 ---
 
@@ -10,9 +10,9 @@ Single source of truth for default model identifiers and CLI flags used across s
 
 | Provider | Model ID | Used In |
 |---|---|---|
-| OpenAI (Codex CLI) | `gpt-5.6-sol` | `/codex`, `/ai-council`, `/codereview`, `/quick-review`, `/plan-review` |
+| OpenAI (Codex CLI) | `gpt-5.6-sol` | `/codex`, `/ai-council`, `/codereview`, `/plan-review` |
 | Google (Antigravity CLI) | *(managed by agy)* | `/antigravity`, `/ai-council`, `/codereview` |
-| Anthropic (Claude CLI) | `opus` | `/claude`, `/codereview`, `/quick-review` |
+| Anthropic (Claude CLI) | `opus` | `/claude` |
 | Anthropic (Claude CLI) | `fable` | `/ai-council` (Claude leg), `/plan-review` |
 
 ## Review Model Routing
@@ -112,16 +112,16 @@ claude -c -p "<PROMPT>" 2>/dev/null                  # most recent session
 claude --resume "<NAME>" -p "<PROMPT>" 2>/dev/null   # named session (set at dispatch via --name)
 ```
 
-## Agent Tool (Subagent) Model
+## Same-Platform Subagent Defaults
 
-Skills that spawn subagents via the Agent tool pin an explicit model alias. Two tiers are in use:
+Skills that spawn subagents through the current host MUST inherit the parent model and reasoning effort by default.
 
-| Model | Skills |
-|---|---|
-| `fable` | `/ai-council`, `/explain`, `/readability-review`, `/codebase-audit` |
-| `opus` | all other subagent-spawning skills (`/codereview`, `/quick-review`, `/devlog`, `/retrospective`, `/interaction-review`, `/human-review-guide`, `/handbook`) |
+- **Claude Code:** omit the per-call `model` and `effort` fields. Claude Code treats an omitted model as `inherit`, so a Fable parent gets Fable subagents and an Opus parent gets Opus subagents.
+- **Codex:** omit per-call model and reasoning-effort overrides. The subagent then follows the parent Codex model and reasoning effort.
+- **Explicit overrides:** honor a model or effort override when the user specifically asks for one. Host-level settings deliberately configured by the user also count as overrides.
+- **Cross-model work:** this rule does not apply when a skill intentionally calls another model or provider for independent evaluation or delegation. Those paths keep their explicit model selection.
 
-This section is the single source of truth for that choice: if a skill's default subagent model changes, update this table and the inline literals (`grep -rn 'model: "' skills/`).
+Do not pin a same-platform subagent to `fable`, `opus`, a GPT model, or any other model alias inside a skill.
 
 ## Why `2>/dev/null`
 

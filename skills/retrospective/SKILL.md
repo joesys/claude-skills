@@ -97,7 +97,9 @@ Save to `<retro-dir>/00-carry-forward.md`. No checkpoint pause — feeds directl
 
 ## Phase 1: Mine via Parallel Channel Agents
 
-**MUST dispatch 5 subagents simultaneously** — all 5 in a single response. Each uses `model: "opus"`. Read `references/agent-prompts.md` for full prompt templates and guiding principles.
+**MUST dispatch 5 subagents simultaneously** — all 5 in a single response. Read `references/agent-prompts.md` for full prompt templates and guiding principles.
+
+For same-platform subagents, do not pass a model or reasoning-effort override. Let every subagent inherit the parent model and reasoning effort unless the user explicitly asks for an override.
 
 ### Agent Roster
 
@@ -187,7 +189,7 @@ Present improvement proposals **one by one** using `AskUserQuestion`: Approve / 
 
 ## Phase 4: Retro Narrative
 
-**MUST run in a fresh context agent** (`subagent_type: "general-purpose"`, `model: "opus"`). Read `references/agent-prompts.md` for the narrative agent prompt and writing rules.
+**MUST run in a fresh context agent** (`subagent_type: "general-purpose"`). Read `references/agent-prompts.md` for the narrative agent prompt and writing rules.
 
 The agent receives `03-retro-summary.md` and `02-topic-discussions.md`. Output: `<retro-dir>/04-retro-narrative.md` — engaging prose, not reformatted summary.
 

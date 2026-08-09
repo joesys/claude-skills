@@ -105,7 +105,7 @@ Batch files into groups of roughly equal size (aim for 10-15 per batch). Keep re
 
 When the diff exceeds the large-tier threshold, file-batching stops being enough - related changes span files, and arbitrary slices miss cross-file issues. Instead: scope the diff into logical clusters, dispatch a full review per cluster, then synthesize across clusters.
 
-**Step 1 - Scoping pass (one agent).** Dispatch a single agent with `model: "opus"` that receives only metadata (no full file contents):
+**Step 1 - Scoping pass (one agent).** Dispatch a single agent that receives only metadata (no full file contents):
 
 - `git diff --stat <base>...HEAD`
 - `git log <base>...HEAD --oneline`
@@ -225,7 +225,7 @@ For each violation:
 
 Severity levels are defined in `../shared/review-common.md` Section Severity Scale (P0 critical through P4 optional).
 
-**MUST spawn subagents** with `model: "opus"` to ensure high-quality analysis.
+For same-platform subagents, do not pass a model or reasoning-effort override. Let every subagent inherit the parent model and reasoning effort unless the user explicitly asks for an override.
 
 #### Story Readability Subagent Adjustments
 
@@ -300,7 +300,7 @@ Gather all findings from the 7 domain subagents and the cross-model dispatch. If
 
 **Only runs when large-tier dispatch was used (Section 1.4b).** Skip for small and medium tier.
 
-After all cluster dispatches return, spawn one additional synthesis agent with `model: "opus"`. It receives:
+After all cluster dispatches return, spawn one additional synthesis agent. It receives:
 
 - The cluster manifest from the scoping pass (Section 1.4b Step 1)
 - All findings from every cluster's dispatch (pre-dedup)
@@ -440,7 +440,7 @@ This is the **mechanical** synthesis output. Phase 3.7 below takes it as input a
 
 ## Phase 3.7: Senior Tech Lead Re-review
 
-After Section3.6 produces the mechanical synthesis, dispatch **one** Agent (model: `"opus"`) acting as a senior tech lead. This is the final judgment pass before the report reaches the user. **Always on by default**; suppressed only with `--no-re-review`.
+After Section3.6 produces the mechanical synthesis, dispatch **one** Agent acting as a senior tech lead. This is the final judgment pass before the report reaches the user. **Always on by default**; suppressed only with `--no-re-review`.
 
 The tech lead's output **IS** the final report - it replaces Section3.6's output. The mechanical synthesis is now the tech lead's input, not the user-facing deliverable.
 
@@ -460,7 +460,7 @@ The tech lead subagent receives:
 ```
 You are a senior tech lead doing a final read of a code review report before it goes to the engineer.
 
-Seven domain agents and a cross-model reviewer produced findings. The mechanical synthesis (deduplication, severity filtering, correctness prioritization) is done. Your job is to apply judgment over their work and produce the FINAL report the engineer will read.
+Seven domain agents and two cross-model reviewers produced findings. The mechanical synthesis (deduplication, severity filtering, correctness prioritization) is done. Your job is to apply judgment over their work and produce the FINAL report the engineer will read.
 
 You can:
 1. Reject findings as false positives (move to "Rejected by Re-review" with reason)
@@ -518,7 +518,7 @@ Produce the final markdown report, structured identically to Section3.6 (Summary
 | Property | Value |
 |---|---|
 | Tool | `Agent` |
-| Model | `"opus"` |
+| Model | Inherit from the parent; do not pass a model or effort override |
 | Parallelism | Sequential - runs AFTER Section3.6 completes; cannot parallelize with the domain agents because it operates on their output |
 | Timeout | Standard agent timeout |
 

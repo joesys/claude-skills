@@ -93,7 +93,7 @@ Read `../shared/review-common.md` Section Target Language Detection.
 
 Dispatch a **single subagent** via the Codex agent workflow. Readability grading is a unified, qualitative judgment - it is not split across multiple domain subagents. No cross-model dispatch (the scoring is calibrated to the principle file and must be internally consistent). No static analysis tooling (this is a qualitative, judgment-based review).
 
-**MUST spawn the subagent** with `model: "fable"`.
+For same-platform subagents, do not pass a model or reasoning-effort override. Let every subagent inherit the parent model and reasoning effort unless the user explicitly asks for an override.
 
 ### Subagent Prompt
 
@@ -254,7 +254,7 @@ After presenting the report, ask:
 
 - **Independent files:** dispatch parallel fix agents (one per file)
 - **Same-file fixes:** apply sequentially to avoid conflicts
-- Each fix agent **MUST be spawned** with `model: "fable"` via the Codex agent workflow
+- Each fix agent **MUST inherit the parent model and reasoning effort**; do not pass an override unless the user explicitly asks for one
 - Each fix agent receives:
   - The finding details (dimension, location, before/after, explanation)
   - The full file content

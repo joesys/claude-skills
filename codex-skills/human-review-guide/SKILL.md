@@ -148,7 +148,9 @@ Gather the content to analyze based on the resolved mode:
 
 ### 1.2 Triage - Classification Pass
 
-Dispatch a **single subagent** (`model: "opus"`) to classify every chunk. Read `references/agent-prompts.md` Section Triage Agent for the full prompt template.
+Dispatch a **single subagent** to classify every chunk. Read `references/agent-prompts.md` Section Triage Agent for the full prompt template.
+
+For same-platform subagents, do not pass a model or reasoning-effort override. Let every subagent inherit the parent model and reasoning effort unless the user explicitly asks for an override.
 
 **Agent receives:**
 1. The mode (`code-diff`, `artifact`, or `mixed`)
@@ -185,7 +187,7 @@ Dispatch a **single subagent** (`model: "opus"`) to classify every chunk. Read `
 
 Fires only on chunks classified as `DECIDE` or `READ`. All other chunks pass through to Phase 3 with just their triage label.
 
-Dispatch a **single subagent** (`model: "opus"`) that processes all DECIDE and READ chunks **sequentially** - not parallel, because chunks often relate to each other and the analysis benefits from accumulated context. Read `references/agent-prompts.md` Section Deep Analysis Agent for the full prompt template.
+Dispatch a **single subagent** that processes all DECIDE and READ chunks **sequentially** - not parallel, because chunks often relate to each other and the analysis benefits from accumulated context. Read `references/agent-prompts.md` Section Deep Analysis Agent for the full prompt template.
 
 ### Agent Receives
 
